@@ -53,10 +53,10 @@ allprojects {
         orma_version = '3.2.2'
         jetbrains_annotations_version = '13.0'
 
-        android_compilesdk_version = 25
-        android_buildtools_version = '25.0.2'
+        android_compilesdk_version = 27
+        android_buildtools_version = '27.0.3'
         android_minsdk_version = 9
-        android_targetsdk_version = 25
+        android_targetsdk_version = 27
 
         android_minsdk_version_orma = 15
 

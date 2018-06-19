@@ -59,7 +59,7 @@ public abstract class RealmObjectStorage<TB extends RealmModel, AB extends Realm
                 .map(new Func1<Void, RealmResults<? extends SavingObject<?, ?>>>() {
 
                     @Override
-                    public RealmResults<? extends SavingObject<?, ?>> call(Void _) {
+                    public RealmResults<? extends SavingObject<?, ?>> call(Void v) {
                         return realm.get()
                                 .where(clazz)
                                 .equalTo("serializedKey", key.getSerialized())
@@ -85,7 +85,7 @@ public abstract class RealmObjectStorage<TB extends RealmModel, AB extends Realm
                 })
                 .doOnNext(new Action1<IRepositoryDataContainer<T, A>>() {
                     @Override
-                    public void call(IRepositoryDataContainer<T, A> _) {
+                    public void call(IRepositoryDataContainer<T, A> container) {
                         if (closeAfter()) realm.get().close();
                     }
                 });
@@ -110,14 +110,14 @@ public abstract class RealmObjectStorage<TB extends RealmModel, AB extends Realm
                 .observeOn(getScheduler())
                 .doOnNext(new Action1<Void>() {
                     @Override
-                    public void call(Void _) {
+                    public void call(Void v) {
                         realm.get().beginTransaction();
                     }
                 })
                 .map(new Func1<Void, RealmResults<? extends SavingObject<?, ?>>>() {
 
                     @Override
-                    public RealmResults<? extends SavingObject<?, ?>> call(Void _) {
+                    public RealmResults<? extends SavingObject<?, ?>> call(Void v) {
                         return realm.get()
                                 .where(clazz)
                                 .equalTo("serializedKey", key.getRelatedKey())
@@ -139,7 +139,7 @@ public abstract class RealmObjectStorage<TB extends RealmModel, AB extends Realm
                 })
                 .doOnNext(new Action1<Integer>() {
                     @Override
-                    public void call(Integer _) {
+                    public void call(Integer i) {
                         realm.get().commitTransaction();
                         if (closeAfter()) realm.get().close();
                     }
@@ -165,14 +165,14 @@ public abstract class RealmObjectStorage<TB extends RealmModel, AB extends Realm
                 .observeOn(getScheduler())
                 .doOnNext(new Action1<Void>() {
                     @Override
-                    public void call(Void _) {
+                    public void call(Void v) {
                         realm.get().beginTransaction();
                     }
                 })
                 .map(new Func1<Void, RealmResults<? extends SavingObject<?, ?>>>() {
 
                     @Override
-                    public RealmResults<? extends SavingObject<?, ?>> call(Void _) {
+                    public RealmResults<? extends SavingObject<?, ?>> call(Void v) {
                         return realm.get()
                                 .where(clazz)
                                 .equalTo("relatedKey", key.getRelatedKey())
@@ -194,7 +194,7 @@ public abstract class RealmObjectStorage<TB extends RealmModel, AB extends Realm
                 })
                 .doOnNext(new Action1<Integer>() {
                     @Override
-                    public void call(Integer _) {
+                    public void call(Integer i) {
                         realm.get().commitTransaction();
                         if (closeAfter()) realm.get().close();
                     }
@@ -223,19 +223,19 @@ public abstract class RealmObjectStorage<TB extends RealmModel, AB extends Realm
                 .observeOn(getScheduler())
                 .doOnNext(new Action1<Void>() {
                     @Override
-                    public void call(Void _) {
+                    public void call(Void v) {
                         container.setSavedAtTimeMillis(System.currentTimeMillis());
                     }
                 })
                 .doOnNext(new Action1<Void>() {
                     @Override
-                    public void call(Void _) {
+                    public void call(Void v) {
                         realm.get().beginTransaction();
                     }
                 })
                 .map(new Func1<Void, SavingObject<?, ?>>() {
                     @Override
-                    public SavingObject<?, ?> call(Void _) {
+                    public SavingObject<?, ?> call(Void v) {
                         SavingObject<?, ?> saving = realm.get().createObject(clazz, key.getSerialized());
                         {
                             //saving.setSerializedKey(key.getSerialized());
